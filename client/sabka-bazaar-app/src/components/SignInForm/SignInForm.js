@@ -25,7 +25,7 @@ const SignInForm = ({ googleSignInStart, emailSignInStart }) => {
   const signInWithGoogle = async () => {
     googleSignInStart && dispatch(googleSignInStart());
     const response = await signInWithGooglePopup();
-    createUserDocumentFromAuth(response.user);
+    const userDocRef = createUserDocumentFromAuth(response.user);
   };
 
   const handleSubmit = async (event) => {
