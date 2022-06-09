@@ -1,8 +1,17 @@
-function App() {
+import React from 'react';
+import SignInForm from './components/SignInForm';
+
+const App = () => {
   return (
-    <div>
+    <>
+    <header>
       It's Sabka Bazaar
-    </div>
+    </header>
+    <main>
+      <SignInForm></SignInForm>
+    </main>
+    <footer>© Kodlyzer</footer>
+    </>
   );
 }
 
