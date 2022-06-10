@@ -4,8 +4,8 @@ import { signInAuthUserWithEmailAndPassword } from '../utils/firebase.utils';
 export const loginAsync = createAsyncThunk(
   'user/login',
   async ({ email, password }) => {
-    const user = await signInAuthUserWithEmailAndPassword(email, password);
-    return user;
+    const response = await signInAuthUserWithEmailAndPassword(email, password);
+    return response?.user;
   }
 );
 
@@ -50,7 +50,6 @@ export const userSlice = createSlice({
   },
 })
 
-// Action creators are generated for each case reducer function
 export const { increment, decrement, incrementByAmount } = userSlice.actions
 
 export default userSlice.reducer

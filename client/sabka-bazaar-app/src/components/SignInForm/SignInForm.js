@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 
 import FormInput from '../FormInput';
 import Button from '../Button';
@@ -11,8 +10,7 @@ const defaultFormFields = {
   password: '',
 };
 
-const SignInForm = ({ emailSignInStartAction }) => {
-  const dispatch = useDispatch();
+const SignInForm = ({ onEmailSignIn }) => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
 
@@ -24,7 +22,7 @@ const SignInForm = ({ emailSignInStartAction }) => {
     event.preventDefault();
 
     try {
-      emailSignInStartAction && dispatch(emailSignInStartAction(email, password));
+      onEmailSignIn && onEmailSignIn({ email, password });
       resetFormFields();
     } catch (error) {
       console.log('user sign in failed', error);
