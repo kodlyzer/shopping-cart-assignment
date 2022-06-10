@@ -1,4 +1,5 @@
 import React from 'react';
+import { Outlet, Link } from "react-router-dom";
 import SignInForm from './components/SignInForm';
 
 const App = () => {
@@ -8,7 +9,7 @@ const App = () => {
       It's Sabka Bazaar
     </header>
     <main>
-      <SignInForm></SignInForm>
+      <Outlet />
     </main>
     <footer>© Kodlyzer</footer>
     </>

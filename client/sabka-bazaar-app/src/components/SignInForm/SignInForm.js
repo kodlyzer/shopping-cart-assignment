@@ -2,18 +2,16 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import FormInput from '../FormInput';
-import Button, { BUTTON_TYPE_CLASSES } from '../Button';
+import Button from '../Button';
 
-import { SignInContainer, ButtonsContainer } from './SignInForm.styled';
-
-import { createUserDocumentFromAuth, signInWithGooglePopup } from '../../utils/firebase.util'
+import { ButtonsContainer } from './SignInForm.styled';
 
 const defaultFormFields = {
   email: '',
   password: '',
 };
 
-const SignInForm = ({ googleSignInStart, emailSignInStart }) => {
+const SignInForm = ({ emailSignInStartAction }) => {
   const dispatch = useDispatch();
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
@@ -22,17 +20,11 @@ const SignInForm = ({ googleSignInStart, emailSignInStart }) => {
     setFormFields(defaultFormFields);
   };
 
-  const signInWithGoogle = async () => {
-    googleSignInStart && dispatch(googleSignInStart());
-    const response = await signInWithGooglePopup();
-    const userDocRef = createUserDocumentFromAuth(response.user);
-  };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      emailSignInStart && dispatch(emailSignInStart(email, password));
+      emailSignInStartAction && dispatch(emailSignInStartAction(email, password));
       resetFormFields();
     } catch (error) {
       console.log('user sign in failed', error);
@@ -46,9 +38,6 @@ const SignInForm = ({ googleSignInStart, emailSignInStart }) => {
   };
 
   return (
-    <SignInContainer>
-      <h2>Already have an account?</h2>
-      <span>Sign in with your email and password</span>
       <form onSubmit={handleSubmit}>
         <FormInput
           label='Email'
@@ -69,16 +58,8 @@ const SignInForm = ({ googleSignInStart, emailSignInStart }) => {
         />
         <ButtonsContainer>
           <Button type='submit'>Sign In</Button>
-          <Button
-            buttonType={BUTTON_TYPE_CLASSES.google}
-            type='button'
-            onClick={signInWithGoogle}
-          >
-            Sign In With Google
-          </Button>
         </ButtonsContainer>
       </form>
-    </SignInContainer>
   );
 };
 
