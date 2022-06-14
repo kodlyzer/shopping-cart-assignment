@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { signInAuthUserWithEmailAndPassword } from '../utils/firebase.utils';
+import { signInAuthUserWithEmailAndPassword, signoutUser } from '../utils/firebase.utils';
 
 export const loginAsync = createAsyncThunk(
-  'user/login',
+  'auth/login',
   async ({ email, password }) => {
     const response = await signInAuthUserWithEmailAndPassword(email, password);
     return response?.user;
@@ -10,12 +10,21 @@ export const loginAsync = createAsyncThunk(
 );
 
 export const signUpAsync = createAsyncThunk(
-  'user/signup',
+  'auth/signup',
   async ({ email, password }) => {
     const user = await signInAuthUserWithEmailAndPassword(email, password);
     return user;
   }
 );
+
+export const signOutAsync = createAsyncThunk(
+  'auth/signout',
+  async () => {
+    const user = await signoutUser();
+    return user;
+  }
+);
+
 
 
 const initialState = {
@@ -24,16 +33,13 @@ const initialState = {
   loading: null
 }
 
-export const userSlice = createSlice({
-  name: 'user',
+export const authSlice = createSlice({
+  name: 'auth',
   initialState,
   reducers: {
-    signUpStart: (state) => {},
-    signUpEnd: (state) => {},
-    signUpError: (state, action) => {},
-    loginStart: (state, action) => {},
-    loginEnd: (state, action) => {},
-    loginError: (state, action) => {}
+    setCurrentUser: (state, action) => { 
+      state.user = action?.payload;
+    }
   },
   extraReducers: builder => {
     builder.addCase(loginAsync.pending, (state, action) => {
@@ -42,14 +48,19 @@ export const userSlice = createSlice({
     builder.addCase(loginAsync.fulfilled, (state, action) => {
       state.user = action?.payload;
       state.loading = false;
+      console.log(state.user);
     });
     builder.addCase(loginAsync.rejected, (state, action) => {
       state.error = action.error;
       state.loading = false;
     });
+    builder.addCase(signOutAsync.fulfilled, (state, action) => {
+      state.user = null;
+    });
+    
   },
 })
 
-export const { increment, decrement, incrementByAmount } = userSlice.actions
+export const { setCurrentUser } = authSlice.actions
 
-export default userSlice.reducer
+export default authSlice.reducer

@@ -10,7 +10,7 @@ const defaultFormFields = {
   password: '',
 };
 
-const SignInForm = ({ onEmailSignIn }) => {
+const SignInForm = ({ onEmailSignIn, isLoading }) => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
 
@@ -55,7 +55,7 @@ const SignInForm = ({ onEmailSignIn }) => {
           value={password}
         />
         <ButtonsContainer>
-          <Button type='submit'>Sign In</Button>
+          <Button type='submit' isLoading={isLoading}>Sign In</Button>
         </ButtonsContainer>
       </form>
   );

@@ -1,14 +1,16 @@
 import styled from "styled-components";
 
+const primaryColor = '#d00256';
+
 export const BaseButton = styled.button`
   min-width: 165px;
-  width: auto;
+  width: 100%;
   height: 50px;
   letter-spacing: 0.5px;
   line-height: 50px;
   padding: 0 35px 0 35px;
   font-size: 15px;
-  background-color: black;
+  background-color: ${primaryColor};
   color: white;
   text-transform: uppercase;
   font-family: "Open Sans Condensed";
@@ -21,8 +23,8 @@ export const BaseButton = styled.button`
 
   &:hover {
     background-color: white;
-    color: black;
-    border: 1px solid black;
+    color: ${primaryColor};
+    border: 1px solid ${primaryColor};
   }
 `;
 
@@ -38,11 +40,11 @@ export const GoogleSignInButton = styled(BaseButton)`
 
 export const InvertedButton = styled(BaseButton)`
   background-color: white;
-  color: black;
-  border: 1px solid black;
+  color: ${primaryColor};
+  border: 1px solid ${primaryColor};
 
   &:hover {
-    background-color: black;
+    background-color: ${primaryColor};
     color: white;
     border: none;
   }
@@ -54,7 +56,7 @@ export const LoadingSpinner = styled.div`
   height: 30px;
   border: 3px solid rgba(195, 195, 195, 0.6);
   border-radius: 50%;
-  border-top-color: #636767;
+  border-top-color: ${primaryColor};
   animation: spin 1s ease-in-out infinite;
   -webkit-animation: spin 1s ease-in-out infinite;
   @keyframes spin {
