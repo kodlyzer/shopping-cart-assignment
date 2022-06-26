@@ -30,7 +30,8 @@ export const signOutAsync = createAsyncThunk(
 const initialState = {
   value: 0,
   user: null,
-  loading: null
+  loading: null,
+  isAuthenticated: false,
 }
 
 export const authSlice = createSlice({
@@ -48,7 +49,7 @@ export const authSlice = createSlice({
     builder.addCase(loginAsync.fulfilled, (state, action) => {
       state.user = action?.payload;
       state.loading = false;
-      console.log(state.user);
+      state.isAuthenticated = true;
     });
     builder.addCase(loginAsync.rejected, (state, action) => {
       state.error = action.error;
